@@ -14,6 +14,28 @@ app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 
 
+// middleware 
+
+app.use((req,res,next)=>{
+    console.log('middleware 1 is working');
+    req.myuserName='sachin'
+    next()
+})
+
+
+app.use((req,res,next,)=>{
+    console.log('middleware 2 is working',req.myuserName);
+    next()
+})
+
+app.use((req,res,next)=>{
+    fs.appendFile('log.txt',`request made to ${req.url} at ${Date.now()} \n`,(err,data)=>{
+        console.log('log file created');
+        next()
+    })
+})
+
+
 
 // routes
 
@@ -21,6 +43,7 @@ app.use(express.urlencoded({extended:false}))
 
 
 app.get('/api/users',(req,res)=>{
+    console.log('inside route',req.myuserName);
     return res.json(users)
 })
 

@@ -1,0 +1,4 @@
+request made to /api/users/ at 1706855620434 
+request made to /api/users/1001 at 1706855643451 
+request made to /api/users/1001 at 1706855683432 
+request made to /api/users/ at 1706855697188 
