@@ -9,3 +9,6 @@ request made to /api/users/ at 1706857846022
 request made to /api/users/ at 1706857879704 
 request made to /api/users/10000 at 1706858094903 
 request made to /api/users/10000 at 1706858157203 
+request made to /api/users/ at 1706863508953 
+request made to /api/users/ at 1706863594141 
+request made to /api/users/ at 1706863628155 

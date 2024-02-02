@@ -6,10 +6,13 @@ const fs = require('fs')
 
 
 const users = require('./MOCK_DATA.json')
-const { log } = require('console')
-
 
 app.use(express.json())
+
+
+
+
+
 
 //middleware for encoded form data
 app.use(express.urlencoded({extended:false}))
@@ -79,17 +82,29 @@ app.get('/api/users/:id',(req,res)=>{
 
 // 4. api end point for creating a new user
 
-app.post('/api/users',(req,res)=>{
+app.post('/api/users',async (req,res)=>{
     console.log('inside post route');
     const body = req.body
-    console.log(body);
+    // console.log(body);
     if(!body || !body.first_name || !body.last_name || !body.email || !body.gender){
         return res.status(400).json({status: 'error', message: 'Please provide all the required fields' })
     }
-    users.push({...body,id:users.length+1})
-    fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
-        return res.status(201).json({status: 'success'} )
+    // users.push({...body,id:users.length+1})
+    // fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
+    //     return res.status(201).json({status: 'success'} )
+    // })
+
+    const result = await User.create({
+        first_name:body.first_name,
+        last_name:body.last_name,
+        email:body.email,
+        gender:body.gender
     })
+
+    console.log(result);
+
+    return res.status(201).json({status: 'success', message: 'User created successfully' })
+
     
 })
 
