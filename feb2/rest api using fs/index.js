@@ -6,6 +6,7 @@ const fs = require('fs')
 
 
 const users = require('./MOCK_DATA.json')
+const { log } = require('console')
 
 
 app.use(express.json())
@@ -31,6 +32,7 @@ app.use((req,res,next,)=>{
 app.use((req,res,next)=>{
     fs.appendFile('log.txt',`request made to ${req.url} at ${Date.now()} \n`,(err,data)=>{
         console.log('log file created');
+        console.log(req.headers);
         next()
     })
 })
@@ -44,6 +46,9 @@ app.use((req,res,next)=>{
 
 app.get('/api/users',(req,res)=>{
     console.log('inside route',req.myuserName);
+
+    // setting custom headers
+    res.setHeader('X-myName','sachin')
     return res.json(users)
 })
 
@@ -66,6 +71,9 @@ app.get('/users',(req,res)=>{
 app.get('/api/users/:id',(req,res)=>{
     const id =Number(req.params.id)
     const user = users.find(user=>user.id === id)
+    if(!user){
+        return res.status(404).json({status: 'error', message: 'User not found' })
+    }
     return res.json(user)
 })
 
@@ -75,9 +83,12 @@ app.post('/api/users',(req,res)=>{
     console.log('inside post route');
     const body = req.body
     console.log(body);
+    if(!body || !body.first_name || !body.last_name || !body.email || !body.gender){
+        return res.status(400).json({status: 'error', message: 'Please provide all the required fields' })
+    }
     users.push({...body,id:users.length+1})
     fs.writeFile('./MOCK_DATA.json',JSON.stringify(users),(err,data)=>{
-        return res.json({status: 'success'} )
+        return res.status(201).json({status: 'success'} )
     })
     
 })
