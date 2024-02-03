@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1><a style="text-decoration: none;" href="/">URL Shortner</a></h1>
+    
+    <div>
+        <form method="POST" action="/url">
+            <label>Enter your URL </label>
+            <input type="text" placeholder="https://example.com" name="url">
+            <button type="submit">Generate</button>
+        </form>
+        
+        <%  if(locals.id){ %>
+            <h2>Shortened url :</h2>
+            <a href="http://localhost:8000/url/<%= id %>" target="_blank">http://localhost:8000/url/<%= id %></a>
+        <%    } %>
+    </div>
+</body>
+</html>
